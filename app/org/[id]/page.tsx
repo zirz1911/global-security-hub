@@ -3,6 +3,7 @@ import Link from 'next/link'
 import prisma from '@/lib/prisma'
 import { PersonnelCard } from '@/components/PersonnelCard'
 import { ORG_TYPE_LABELS, ORG_TYPE_COLORS, OrgType } from '@/lib/types'
+import { getCountryFlag } from '@/lib/flags'
 import { Metadata } from 'next'
 
 // Revalidate every 6 hours
@@ -64,6 +65,7 @@ export default async function OrganizationPage({ params }: PageProps) {
 
   const typeColor = ORG_TYPE_COLORS[org.type as OrgType] || ORG_TYPE_COLORS.OTHER
   const typeLabel = ORG_TYPE_LABELS[org.type as OrgType] || org.type
+  const flagUrl = getCountryFlag(org.country, 'w80')
   const currentPersonnel = org.personnel.filter(p => p.isCurrent)
   const formerPersonnel = org.personnel.filter(p => !p.isCurrent)
 
@@ -87,9 +89,9 @@ export default async function OrganizationPage({ params }: PageProps) {
         <div className="bg-white border border-gray-200 rounded-lg p-6 mb-6">
           <div className="flex flex-col md:flex-row gap-6">
             {/* Logo */}
-            <div className="w-24 h-24 bg-gray-100 rounded-lg flex items-center justify-center text-4xl font-bold text-gray-400 flex-shrink-0">
+            <div className="w-24 h-24 bg-gray-100 rounded-lg flex items-center justify-center text-4xl font-bold text-gray-500 flex-shrink-0">
               {org.logoUrl ? (
-                <img src={org.logoUrl} alt={org.name} className="w-full h-full object-contain rounded-lg" />
+                <img src={org.logoUrl} alt={org.name} className="w-full h-full object-contain rounded-lg p-1" />
               ) : (
                 org.name.charAt(0).toUpperCase()
               )}
@@ -109,11 +111,8 @@ export default async function OrganizationPage({ params }: PageProps) {
                 </span>
 
                 {/* Country Badge */}
-                <span className="px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800 flex items-center gap-1">
-                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
+                <span className="px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800 flex items-center gap-1.5">
+                  <img src={flagUrl} alt={org.country} className="w-4 h-3 object-cover rounded-sm" />
                   {org.country}
                 </span>
 
@@ -169,7 +168,7 @@ export default async function OrganizationPage({ params }: PageProps) {
           <div className="bg-white border border-gray-200 rounded-lg p-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">
               Personnel
-              <span className="ml-2 text-sm font-normal text-gray-500">
+              <span className="ml-2 text-sm font-normal text-gray-600">
                 ({currentPersonnel.length} current, {formerPersonnel.length} former)
               </span>
             </h2>
@@ -189,7 +188,7 @@ export default async function OrganizationPage({ params }: PageProps) {
             {/* Former Personnel */}
             {formerPersonnel.length > 0 && (
               <div>
-                <h3 className="text-sm font-medium text-gray-500 mb-3">Former Members</h3>
+                <h3 className="text-sm font-medium text-gray-600 mb-3">Former Members</h3>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                   {formerPersonnel.map((person) => (
                     <PersonnelCard key={person.id} person={person} />
@@ -201,7 +200,7 @@ export default async function OrganizationPage({ params }: PageProps) {
         )}
 
         {/* Last Updated */}
-        <div className="mt-6 text-center text-sm text-gray-500">
+        <div className="mt-6 text-center text-sm text-gray-600">
           Last updated: {org.lastUpdated.toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
@@ -212,7 +211,7 @@ export default async function OrganizationPage({ params }: PageProps) {
 
       {/* Footer */}
       <footer className="bg-white border-t border-gray-200 mt-12">
-        <div className="max-w-5xl mx-auto px-4 py-6 text-center text-sm text-gray-500">
+        <div className="max-w-5xl mx-auto px-4 py-6 text-center text-sm text-gray-600">
           <p>Global Security Hub - Data for informational purposes only</p>
         </div>
       </footer>

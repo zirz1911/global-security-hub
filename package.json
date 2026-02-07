@@ -9,7 +9,11 @@
     "lint": "eslint",
     "db:seed": "npx tsx prisma/seed.ts",
     "db:studio": "npx prisma studio",
-    "db:migrate": "npx prisma migrate dev"
+    "db:migrate": "npx prisma migrate dev",
+    "update-websites": "npx tsx scripts/update-websites.ts",
+    "fetch-logos": "npx tsx scripts/fetch-logos.ts",
+    "clear-personnel": "npx tsx scripts/clear-personnel.ts",
+    "update-personnel": "npx tsx scripts/update-personnel.ts"
   },
   "dependencies": {
     "@libsql/client": "^0.17.0",

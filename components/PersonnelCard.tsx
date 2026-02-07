@@ -12,7 +12,7 @@ export function PersonnelCard({ person }: { person: Personnel }) {
   return (
     <div className={`bg-white border rounded-lg p-4 ${person.isCurrent ? 'border-gray-200' : 'border-gray-100 opacity-75'}`}>
       {/* Photo */}
-      <div className="w-20 h-20 mx-auto bg-gray-100 rounded-full mb-3 flex items-center justify-center text-2xl font-bold text-gray-400 overflow-hidden">
+      <div className="w-20 h-20 mx-auto bg-gray-100 rounded-full mb-3 flex items-center justify-center text-2xl font-bold text-gray-500 overflow-hidden">
         {person.photoUrl ? (
           <img src={person.photoUrl} alt={person.name} className="w-full h-full object-cover" />
         ) : (

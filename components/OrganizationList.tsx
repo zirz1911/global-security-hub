@@ -56,7 +56,7 @@ export function OrganizationList({ organizations, countries, types }: Organizati
       <div className="mb-4 text-sm text-gray-600">
         Showing {paginatedOrgs.length} of {filteredOrgs.length} organizations
         {filteredOrgs.length !== organizations.length && (
-          <span className="text-gray-400"> (filtered from {organizations.length} total)</span>
+          <span className="text-gray-500"> (filtered from {organizations.length} total)</span>
         )}
       </div>
 
@@ -69,7 +69,7 @@ export function OrganizationList({ organizations, countries, types }: Organizati
         </div>
       ) : (
         <div className="text-center py-12 text-gray-500">
-          <svg className="w-12 h-12 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-12 h-12 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           <p>No organizations found matching your criteria.</p>
@@ -83,7 +83,7 @@ export function OrganizationList({ organizations, countries, types }: Organizati
           <button
             onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
             disabled={currentPage === 1}
-            className="px-4 py-2 border border-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+            className="px-4 py-2 border border-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 text-gray-700 font-medium"
           >
             Previous
           </button>
@@ -105,10 +105,10 @@ export function OrganizationList({ organizations, countries, types }: Organizati
                 <button
                   key={pageNum}
                   onClick={() => setCurrentPage(pageNum)}
-                  className={`w-10 h-10 rounded-lg ${
+                  className={`w-10 h-10 rounded-lg font-medium ${
                     currentPage === pageNum
                       ? 'bg-blue-600 text-white'
-                      : 'border border-gray-300 hover:bg-gray-50'
+                      : 'border border-gray-300 hover:bg-gray-50 text-gray-700'
                   }`}
                 >
                   {pageNum}
@@ -120,7 +120,7 @@ export function OrganizationList({ organizations, countries, types }: Organizati
           <button
             onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
             disabled={currentPage === totalPages}
-            className="px-4 py-2 border border-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+            className="px-4 py-2 border border-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 text-gray-700 font-medium"
           >
             Next
           </button>

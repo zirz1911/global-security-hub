@@ -1,6 +1,8 @@
 import prisma from '@/lib/prisma'
 import Link from 'next/link'
 import { ORG_TYPE_LABELS, OrgType } from '@/lib/types'
+import { getCountryFlag } from '@/lib/flags'
+import { DeleteOrganizationButton } from '@/components/DeleteOrganizationButton'
 
 export default async function AdminOrganizationsPage() {
   const organizations = await prisma.organization.findMany({
@@ -30,52 +32,63 @@ export default async function AdminOrganizationsPage() {
           <table className="w-full">
             <thead className="bg-gray-50 border-b border-gray-200">
               <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                   Name
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                   Country
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                   Type
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                   Personnel
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                   Status
                 </th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 py-3 text-right text-xs font-medium text-gray-600 uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {organizations.map((org) => (
-                <tr key={org.id} className="hover:bg-gray-50">
-                  <td className="px-4 py-3">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-sm font-bold text-gray-400">
-                        {org.name.charAt(0)}
+              {organizations.map((org) => {
+                const flagUrl = getCountryFlag(org.country, 'w40')
+                return (
+                  <tr key={org.id} className="hover:bg-gray-50">
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-sm font-bold text-gray-500 flex-shrink-0">
+                          {org.logoUrl ? (
+                            <img src={org.logoUrl} alt={org.name} className="w-full h-full object-contain p-0.5" />
+                          ) : (
+                            org.name.charAt(0)
+                          )}
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-gray-900">{org.name}</p>
+                          {org.website && (
+                            <a
+                              href={org.website}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-xs text-blue-600 hover:underline"
+                            >
+                              Visit website
+                            </a>
+                          )}
+                        </div>
                       </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-900">{org.name}</p>
-                        {org.website && (
-                          <a
-                            href={org.website}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-xs text-blue-600 hover:underline"
-                          >
-                            Visit website
-                          </a>
-                        )}
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-1.5">
+                        <img src={flagUrl} alt={org.country} className="w-4 h-3 object-cover rounded-sm" />
+                        <span className="text-sm text-gray-600">{org.country}</span>
                       </div>
-                    </div>
-                  </td>
-                  <td className="px-4 py-3 text-sm text-gray-600">{org.country}</td>
+                    </td>
                   <td className="px-4 py-3">
-                    <span className="text-xs">
+                    <span className="text-xs text-gray-700 font-medium">
                       {ORG_TYPE_LABELS[org.type as OrgType] || org.type}
                     </span>
                   </td>
@@ -112,10 +125,16 @@ export default async function AdminOrganizationsPage() {
                       >
                         Personnel
                       </Link>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                      <DeleteOrganizationButton
+                        organizationId={org.id}
+                        organizationName={org.name}
+                        personnelCount={org._count.personnel}
+                      />
+                      </div>
+                    </td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
         </div>

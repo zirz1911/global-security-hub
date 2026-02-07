@@ -42,19 +42,19 @@ export default async function AdminDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
         <div className="bg-white border border-gray-200 rounded-lg p-6">
           <div className="text-3xl font-bold text-blue-600">{totalOrgs}</div>
-          <div className="text-sm text-gray-500">Total Organizations</div>
+          <div className="text-sm text-gray-600">Total Organizations</div>
         </div>
         <div className="bg-white border border-gray-200 rounded-lg p-6">
           <div className="text-3xl font-bold text-green-600">{countries.length}</div>
-          <div className="text-sm text-gray-500">Countries</div>
+          <div className="text-sm text-gray-600">Countries</div>
         </div>
         <div className="bg-white border border-gray-200 rounded-lg p-6">
           <div className="text-3xl font-bold text-purple-600">{totalPersonnel}</div>
-          <div className="text-sm text-gray-500">Personnel Records</div>
+          <div className="text-sm text-gray-600">Personnel Records</div>
         </div>
         <div className="bg-white border border-gray-200 rounded-lg p-6">
           <div className="text-3xl font-bold text-amber-600">{orgsByType.length}</div>
-          <div className="text-sm text-gray-500">Categories</div>
+          <div className="text-sm text-gray-600">Categories</div>
         </div>
       </div>
 
@@ -72,9 +72,9 @@ export default async function AdminDashboard() {
               <div key={org.id} className="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">
                 <div>
                   <p className="text-sm font-medium text-gray-900">{org.name}</p>
-                  <p className="text-xs text-gray-500">{org.country}</p>
+                  <p className="text-xs text-gray-600">{org.country}</p>
                 </div>
-                <span className="text-xs text-gray-400">
+                <span className="text-xs text-gray-600">
                   {new Date(org.updatedAt).toLocaleDateString()}
                 </span>
               </div>
@@ -86,12 +86,23 @@ export default async function AdminDashboard() {
         <div className="bg-white border border-gray-200 rounded-lg p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Organizations by Type</h2>
           <div className="space-y-3">
-            {orgsByType.map((item) => (
-              <div key={item.type} className="flex items-center justify-between">
-                <span className="text-sm text-gray-700">{item.type.replace('_', ' ')}</span>
-                <span className="text-sm font-semibold text-gray-900">{item._count.type}</span>
-              </div>
-            ))}
+            {orgsByType.map((item) => {
+              const percentage = (item._count.type / totalOrgs) * 100
+              return (
+                <div key={item.type}>
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-sm text-gray-700">{item.type.replace('_', ' ')}</span>
+                    <span className="text-sm font-semibold text-gray-900">{item._count.type}</span>
+                  </div>
+                  <div className="w-full bg-gray-100 rounded-full h-2">
+                    <div
+                      className="bg-blue-600 h-2 rounded-full transition-all"
+                      style={{ width: `${percentage}%` }}
+                    />
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </div>
       </div>
@@ -109,7 +120,7 @@ export default async function AdminDashboard() {
               </div>
               <div>
                 <p className="font-medium text-gray-900">Add Organization</p>
-                <p className="text-xs text-gray-500">Create new entry</p>
+                <p className="text-xs text-gray-600">Create new entry</p>
               </div>
             </div>
           </Link>
@@ -123,7 +134,7 @@ export default async function AdminDashboard() {
               </div>
               <div>
                 <p className="font-medium text-gray-900">Manage Organizations</p>
-                <p className="text-xs text-gray-500">Edit, delete entries</p>
+                <p className="text-xs text-gray-600">Edit, delete entries</p>
               </div>
             </div>
           </Link>
@@ -138,7 +149,7 @@ export default async function AdminDashboard() {
               </div>
               <div>
                 <p className="font-medium text-gray-900">View Public Site</p>
-                <p className="text-xs text-gray-500">See live website</p>
+                <p className="text-xs text-gray-600">See live website</p>
               </div>
             </div>
           </Link>
