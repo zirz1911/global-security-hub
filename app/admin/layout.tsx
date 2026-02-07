@@ -10,7 +10,7 @@ export default async function AdminLayout({
   const user = await requireAuth()
 
   if (!user) {
-    redirect('/admin/login')
+    redirect('/login')
   }
 
   return (
