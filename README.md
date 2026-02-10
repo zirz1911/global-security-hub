@@ -25,7 +25,12 @@ A comprehensive directory website for 150+ security agencies, law enforcement or
 
 - **Organizations**: 173 across 12 categories
 - **Countries**: 76 represented
-- **Personnel**: 692 records
+- **Personnel**: 32 verified leadership profiles (18% coverage)
+- **Data Completeness**:
+  - Organization Logos: 32 (18%)
+  - Website URLs: 50 (29%)
+  - Contact Info (Email/Phone/Address): 17 (10%)
+  - Full Descriptions: 173 (100%)
 - **Static Pages**: 185 pre-generated
 - **Build Time**: ~3 seconds
 - **Lighthouse Score**: 95+ across all metrics

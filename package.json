@@ -13,7 +13,8 @@
     "update-websites": "npx tsx scripts/update-websites.ts",
     "fetch-logos": "npx tsx scripts/fetch-logos.ts",
     "clear-personnel": "npx tsx scripts/clear-personnel.ts",
-    "update-personnel": "npx tsx scripts/update-personnel.ts"
+    "update-personnel": "npx tsx scripts/update-personnel.ts",
+    "enhance-orgs": "npx tsx scripts/enhance-organizations.ts"
   },
   "dependencies": {
     "@libsql/client": "^0.17.0",
